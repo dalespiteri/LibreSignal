@@ -1,170 +1,182 @@
-# LibreSignal 🚦
+# LibreSignal
 
-A practice framework for CodeSignal's Industry Coding Framework (ICF) assessments.
+A TypeScript practice framework for CodeSignal's Industry Coding Framework (ICF) assessments.
 
-## 🎯 Purpose
+## Purpose
 
-This repository provides a realistic simulation environment to prepare for **CodeSignal's Industry Coding Framework (ICF)** assessments. It mirrors the actual test format with multi-level coding problems where each subsequent level builds upon the previous one.
+LibreSignal provides a realistic practice environment for CodeSignal-style ICF assessments. Each problem is split into levels, and each level builds on the behavior from the previous levels.
 
-## 💡 Inspiration
+The TypeScript version keeps the original project flow:
 
-I've long observed that coding assessments—whether CodeSignal, LeetCode, or others—ultimately come down to **practice**. However, CodeSignal's platform doesn't offer practice tests that closely resemble their actual assessments.
+1. Pick a question.
+2. Read the level descriptions.
+3. Implement the missing methods in `simulation.ts`.
+4. Run tests for one level at a time.
+5. Move forward when the current level passes.
 
-After reading [How hackable are automated coding assessments?](https://yanirseroussi.com/2023/05/26/how-hackable-are-automated-coding-assessments/), I came to a deep realization: **CodeSignal is no different than the SAT**. More practice will definitively boost your score. This repo exists to fill that gap—giving you a realistic practice environment so you can walk into your assessment with confidence.
+## Scoring Mindset
 
-## 📊 Scoring & What You Need to Pass
+CodeSignal ICF assessments reward more than getting examples to pass. Design matters, especially because later levels often require extending earlier behavior.
 
-### Score to Percentile Conversion
+Useful habits:
 
-CodeSignal provides a [conversion table](https://support.codesignal.com/hc/en-us/articles/13260678794775-Converting-Historical-Coding-Score-Thresholds-to-Assessment-Score) to translate your score to a percentile ranking.
+- Encapsulate state in classes instead of loose objects everywhere.
+- Keep method behavior small and predictable.
+- Expect later levels to add new constraints to earlier data.
+- Run tests after each level instead of waiting until the end.
 
-### My Experience
+## Requirements
 
-I passed the screening for a well-funded fintech startup with a score of **480**, which corresponds to the **82nd percentile**. Based on this, here's a general guideline:
+- Node.js 20 or newer
+- npm, included with Node.js
 
-| Score | Percentile | Likelihood of Passing |
-|-------|------------|----------------------|
-| < 450 | < 70% | May struggle with competitive companies |
-| 480 | ~82% | Passed startup screening |
-| **500+** | **~85%+** | **Safe target for most companies** |
-
-**🎯 Aim for 500+ to confidently pass most company screenings.**
-
-### 💡 Pro Tip: Modularity Matters
-
-CodeSignal's ICF assessments evaluate **modularity** as a scoring factor. Demonstrate your understanding of **SOLID principles**:
-
-- **Encapsulate your data in classes** — Don't just use dictionaries everywhere
-- **Think about extensibility** — Each level builds on the previous one
-- **Use proper OOP patterns** — Not only does this showcase your software engineering skills, but it makes Levels 3 and 4 significantly easier
-
-For example, instead of storing account data in a simple dict, create an `Account` class with methods for deposit, withdraw, and transaction history. When you reach Level 3 (scheduled payments) and Level 4 (account merging), you'll thank yourself.
-
-## 🚀 Usage
-
-### Prerequisites
-
-- Python 3.10+
-- pip
-
-### Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/LibreSignal.git
-   cd LibreSignal
-   ```
-
-2. **Create a virtual environment** (recommended)
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On macOS/Linux
-   # or
-   .venv\Scripts\activate     # On Windows
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### Implementing Your Solution
-
-1. Navigate to the question folder (e.g., `Questions/bank_system/`)
-2. Read the problem description in the level markdown files (`level1.md`, `level2.md`, etc.)
-3. Implement your solution in `simulation.py`
-4. **Start with Level 1 and progress sequentially** — just like the real test!
-
-### Running Tests
-
-Each level has its own test suite. Run tests for a specific level from the <u>**root directory**</u>:
-
-#### 🏦 Bank System
+Install the TypeScript compiler:
 
 ```bash
-# Test a specific level
-pytest Questions/bank_system/test_bank_system.py::TestLevel1 -v
-pytest Questions/bank_system/test_bank_system.py::TestLevel2 -v
-pytest Questions/bank_system/test_bank_system.py::TestLevel3 -v
-pytest Questions/bank_system/test_bank_system.py::TestLevel4 -v
-
-# Run all tests
-pytest Questions/bank_system/test_bank_system.py -v
+npm install
 ```
 
-#### 🗄️ In-Memory Database
+On Windows PowerShell, if `npm test` is blocked by script execution policy, use `npm.cmd test` instead.
+
+## Implementing Your Solution
+
+Navigate to a question folder, read the level markdown files, and implement the methods in that folder's `simulation.ts`.
+
+Example:
+
+```text
+Questions/bank_system/simulation.ts
+Questions/in_memory_database/simulation.ts
+```
+
+Reference solutions are available in `simulation_solution.ts`. They are included so you can compare approaches after practicing.
+
+The tests compile the TypeScript files into `dist/` before running.
+
+## TypeScript Method Names
+
+The original Python version used snake_case method names. The TypeScript version uses camelCase.
+
+Bank system:
+
+```ts
+createAccount(timestamp: number, accountId: string): boolean
+deposit(timestamp: number, accountId: string, amount: number): number | null
+transfer(timestamp: number, sourceAccountId: string, targetAccountId: string, amount: number): number | null
+topSpenders(timestamp: number, n: number): string[]
+pay(timestamp: number, accountId: string, amount: number): string | null
+getPaymentStatus(timestamp: number, accountId: string, payment: string): string | null
+mergeAccounts(timestamp: number, accountId1: string, accountId2: string): boolean
+getBalance(timestamp: number, accountId: string, timeAt: number): number | null
+```
+
+In-memory database:
+
+```ts
+set(key: string, field: string, value: string): string
+get(key: string, field: string): string
+delete(key: string, field: string): string
+scan(key: string): string
+scanByPrefix(key: string, prefix: string): string
+setAt(key: string, field: string, value: string, timestamp: number): string
+setAtWithTtl(key: string, field: string, value: string, timestamp: number, ttl: number): string
+deleteAt(key: string, field: string, timestamp: number): string
+getAt(key: string, field: string, timestamp: number): string
+scanAt(key: string, timestamp: number): string
+scanByPrefixAt(key: string, prefix: string, timestamp: number): string
+backup(timestamp: number): string
+restore(timestamp: number, timestampToRestore: number): string
+```
+
+Use `null` where the Python version returned `None`.
+
+## Running Tests
+
+Run these commands from the project root.
+
+### All Tests
 
 ```bash
-# Test a specific level
-pytest Questions/in_memory_database/test_in_memory_database.py::TestLevel1 -v
-pytest Questions/in_memory_database/test_in_memory_database.py::TestLevel2 -v
-pytest Questions/in_memory_database/test_in_memory_database.py::TestLevel3 -v
-pytest Questions/in_memory_database/test_in_memory_database.py::TestLevel4 -v
-
-# Run all tests
-pytest Questions/in_memory_database/test_in_memory_database.py -v
+npm test
 ```
 
-## 📁 Project Structure
+### Bank System
 
+```bash
+npm run test:bank
+npm run test:bank:level1
+npm run test:bank:level2
+npm run test:bank:level3
+npm run test:bank:level4
 ```
+
+### In-Memory Database
+
+```bash
+npm run test:db
+npm run test:db:level1
+npm run test:db:level2
+npm run test:db:level3
+npm run test:db:level4
+```
+
+## Checking The Reference Solutions
+
+The normal tests import the compiled output from `simulation.ts`. To run the same tests against the included reference solutions:
+
+macOS/Linux:
+
+```bash
+USE_SOLUTION=1 npm test
+```
+
+Windows PowerShell:
+
+```powershell
+$env:USE_SOLUTION="1"; npm.cmd test
+```
+
+## Project Structure
+
+```text
 LibreSignal/
-├── README.md
-├── requirements.txt
-└── Questions/
-    ├── bank_system/
-    │   ├── level1.md               # Level 1 requirements
-    │   ├── level2.md               # Level 2 requirements
-    │   ├── level3.md               # Level 3 requirements
-    │   ├── level4.md               # Level 4 requirements
-    │   ├── simulation.py           # Your implementation goes here
-    │   ├── simulation_solution.py  # Reference solution
-    │   └── test_bank_system.py     # Test suite
-    └── in_memory_database/
-        ├── level1.md               # Level 1 requirements
-        ├── level2.md               # Level 2 requirements
-        ├── level3.md               # Level 3 requirements
-        ├── level4.md               # Level 4 requirements
-        ├── simulation.py           # Your implementation goes here
-        ├── simulation_solution.py  # Reference solution
-        └── test_in_memory_database.py  # Test suite
+|-- README.md
+|-- package.json
+|-- package-lock.json
+|-- tsconfig.json
+|-- Questions/
+    |-- bank_system/
+    |   |-- level1.md
+    |   |-- level2.md
+    |   |-- level3.md
+    |   |-- level4.md
+    |   |-- simulation.ts
+    |   |-- simulation_solution.ts
+    |   |-- test_bank_system.test.js
+    |   |-- simulation.py
+    |   |-- simulation_solution.py
+    |   |-- test_bank_system.py
+    |-- in_memory_database/
+        |-- level1.md
+        |-- level2.md
+        |-- level3.md
+        |-- level4.md
+        |-- simulation.ts
+        |-- simulation_solution.ts
+        |-- test_in_memory_database.test.js
+        |-- simulation.py
+        |-- simulation_solution.py
+        |-- test_in_memory_database.py
 ```
 
-## 📚 Official Documentation
+The Python files are still present as source material from the original repo. The TypeScript practice flow uses the `.ts` files.
 
-For a deeper understanding of how CodeSignal's ICF works, refer to the official technical brief:
+## Test Day Tips
 
-📄 [Industry Coding Skills Evaluation Framework Technical Brief](https://discover.codesignal.com/rs/659-AFH-023/images/Industry-Coding-Skills-Evaluation-Framework-CodeSignal-Skills-Evaluation-Lab-Short.pdf)
+1. Read all levels before coding.
+2. Start simple, but leave room for later levels.
+3. Keep state changes easy to trace.
+4. Run one level at a time.
+5. Protect passing behavior as you add the next level.
 
-## ⏱️ Test Day Tips
-
-1. **Read ALL levels first** — Understanding what's coming helps you design a modular solution from the start
-2. **Don't over-engineer Level 1** — But do set up proper data structures
-3. **Test frequently** — Run the test suite after implementing each method
-4. **Manage your time** — ~70 minutes total, so roughly 15-20 min per level
-5. **Partial credit exists** — If stuck on Level 4, make sure Levels 1-3 are solid
-
-## 🤝 Contributing
-
-Found a bug? Have a new question to add? Contributions are welcome!
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/new-question`)
-3. Commit your changes (`git commit -m 'Add new question set'`)
-4. Push to the branch (`git push origin feature/new-question`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-**Good luck with your assessment!** 🍀
-
-*Remember: It's just practice. The more you do, the better you get.*
-
----
-
-**Last Updated:** March 2, 2026  
-*Made with [I-hate-doing-meaningless-coding-questions-but-I-want-a-job mindset] in Boston*
+Good luck with your assessment. Practice compounds quickly.
