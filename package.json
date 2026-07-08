@@ -15,7 +15,12 @@
     "test:db:level1": "npm run build && node --test --test-name-pattern=\"In-Memory Database Level 1\" Questions/in_memory_database/test_in_memory_database.test.js",
     "test:db:level2": "npm run build && node --test --test-name-pattern=\"In-Memory Database Level 2\" Questions/in_memory_database/test_in_memory_database.test.js",
     "test:db:level3": "npm run build && node --test --test-name-pattern=\"In-Memory Database Level 3\" Questions/in_memory_database/test_in_memory_database.test.js",
-    "test:db:level4": "npm run build && node --test --test-name-pattern=\"In-Memory Database Level 4\" Questions/in_memory_database/test_in_memory_database.test.js"
+    "test:db:level4": "npm run build && node --test --test-name-pattern=\"In-Memory Database Level 4\" Questions/in_memory_database/test_in_memory_database.test.js",
+    "test:storage": "npm run build && node --test Questions/storage/test_storage.test.js",
+    "test:storage:level1": "npm run build && node --test --test-name-pattern=\"Storage Level 1\" Questions/storage/test_storage.test.js",
+    "test:storage:level2": "npm run build && node --test --test-name-pattern=\"Storage Level 2\" Questions/storage/test_storage.test.js",
+    "test:storage:level3": "npm run build && node --test --test-name-pattern=\"Storage Level 3\" Questions/storage/test_storage.test.js",
+    "test:storage:level4": "npm run build && node --test --test-name-pattern=\"Storage Level 4\" Questions/storage/test_storage.test.js"
   },
   "keywords": [
     "codesignal",
